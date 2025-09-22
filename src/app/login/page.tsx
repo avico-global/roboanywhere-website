@@ -1,120 +1,83 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 
 export default function Login() {
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    rememberMe: false,
+    workspace: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     }));
+    // Clear error when user starts typing
+    if (error) setError("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate login
+    // Simulate connection delay
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    setIsSubmitting(false);
-    // In a real app, you would handle authentication here
-    alert("Login functionality would be implemented here");
+    // Clean and validate workspace name
+    const workspace = formData.workspace.toLowerCase().trim();
+
+    if (workspace) {
+      // Only allow "magnetic" as valid workspace
+      if (workspace === "magnetic") {
+        const workspaceUrl = `https://${workspace}.roboanywhere.com`;
+        window.location.href = workspaceUrl;
+      } else {
+        setIsSubmitting(false);
+        setError("Workspace not found.");
+      }
+    } else {
+      setIsSubmitting(false);
+      setError("Please enter a valid workspace name.");
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-accent-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-[80vh] bg-gradient-to-br from-primary-50 to-accent-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div className="bg-white rounded-xl shadow-lg p-8">
           <div className="text-center mb-8">
-            <div className="flex justify-center mb-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-primary-600 to-accent-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">R</span>
-              </div>
-            </div>
             <h2 className="text-3xl font-bold text-text-primary mb-2">
-              Welcome back
+              Access Your Workspace
             </h2>
             <p className="text-text-secondary">
-              Sign in to your RoboAnywhere account
+              Enter your workspace to continue to RoboAnywhere
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label
-                htmlFor="email"
+                htmlFor="workspace"
                 className="block text-sm font-medium text-text-primary mb-2"
               >
-                Email address
+                Workspace
               </label>
               <input
-                id="email"
-                name="email"
-                type="email"
+                id="workspace"
+                name="workspace"
+                type="text"
                 required
-                value={formData.email}
+                value={formData.workspace}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
-                placeholder="Enter your email"
+                className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200 text-black"
+                placeholder="Enter your workspace name."
               />
-            </div>
-
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-text-primary mb-2"
-              >
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
-                placeholder="Enter your password"
-              />
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="rememberMe"
-                  name="rememberMe"
-                  type="checkbox"
-                  checked={formData.rememberMe}
-                  onChange={handleChange}
-                  className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-secondary-300 rounded"
-                />
-                <label
-                  htmlFor="rememberMe"
-                  className="ml-2 block text-sm text-text-secondary"
-                >
-                  Remember me
-                </label>
-              </div>
-
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="text-primary-600 hover:text-primary-700 hover:underline"
-                >
-                  Forgot your password?
-                </a>
-              </div>
+              {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
             </div>
 
             <button
@@ -144,16 +107,16 @@ export default function Login() {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  Signing in...
+                  Connecting...
                 </>
               ) : (
-                "Sign in"
+                "Go To App"
               )}
             </button>
 
             <div className="text-center">
               <p className="text-text-secondary">
-                Don&apos;t have an account?{" "}
+                Don&apos;t have a workspace?{" "}
                 <Link
                   href="/demo"
                   className="text-primary-600 hover:text-primary-700 hover:underline font-medium"
@@ -167,12 +130,12 @@ export default function Login() {
 
         <div className="text-center text-sm text-text-secondary">
           <p>
-            By signing in, you agree to our{" "}
-            <a href="#" className="text-primary-600 hover:underline">
+            By accessing your workspace, you agree to our{" "}
+            <a href="/terms" className="text-primary-600 hover:underline">
               Terms of Service
             </a>{" "}
             and{" "}
-            <a href="#" className="text-primary-600 hover:underline">
+            <a href="/privacy" className="text-primary-600 hover:underline">
               Privacy Policy
             </a>
           </p>

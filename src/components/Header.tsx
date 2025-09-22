@@ -38,15 +38,15 @@ const Header = () => {
           </nav>
 
           {/* CTA Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-2">
             <Link
-              href="/login"
+              href="/demo"
               className="text-primary-600 hover:text-primary-700 px-3 py-2 text-sm font-medium"
             >
-              Login
+              Demo
             </Link>
-            <Link href="/demo" className="btn-cta text-sm">
-              Get Started
+            <Link href="/login" className="btn-cta text-sm !px-4">
+              Go To App
             </Link>
           </div>
 
@@ -98,17 +98,14 @@ const Header = () => {
               ))}
               <div className="pt-4 space-y-2">
                 <Link
-                  href="/login"
-                  className="block text-primary-600 hover:text-primary-700 px-3 py-2 text-base font-medium"
-                >
-                  Login
-                </Link>
-                <Link
                   href="/demo"
-                  className="block btn-cta text-center"
+                  className="block text-primary-600 hover:text-primary-700 px-3 py-2 text-base font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  Get Started
+                  Request a Demo
+                </Link>
+                <Link href="/login" className="block btn-cta text-center">
+                  Go To App
                 </Link>
               </div>
             </div>
