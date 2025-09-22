@@ -29,7 +29,7 @@ const Footer = () => {
               </Link>
             </div>
 
-            <p className="text-text-secondary text-lg leading-relaxed max-w-md">
+            <p className="text-text-secondary text-lg leading-relaxed max-w-md mt-2">
               Automate your SEO, backlink, and domain management with the
               all-in-one platform for streamlining SEO tasks and enhancing
               backlink strategy.
