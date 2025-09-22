@@ -23,6 +23,11 @@ export const metadata: Metadata = {
   keywords:
     "SEO automation, backlink management, SEO tools, domain management, SEO analytics",
   authors: [{ name: "RoboAnywhere Team" }],
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
   openGraph: {
     title: "RoboAnywhere - Automate Your SEO & Backlink Management",
     description:
