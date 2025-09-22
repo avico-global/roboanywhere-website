@@ -22,16 +22,17 @@ const Footer = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           {/* Brand Section */}
           <div className="lg:col-span-6">
-            <div className="flex items-center mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary-600 via-primary-500 to-accent-500 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-2xl">R</span>
-              </div>
-              <span className="ml-4 text-2xl font-bold text-text-primary">
-                RoboAnywhere
-              </span>
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <Link href="/" className="flex items-center">
+                <img src="/logo.png" className="h-12" alt="RoboAnywhere" />
+              </Link>
             </div>
+
             <p className="text-text-secondary text-lg leading-relaxed max-w-md">
-              Automate your SEO, backlink, and domain management with the all-in-one platform for streamlining SEO tasks and enhancing backlink strategy.
+              Automate your SEO, backlink, and domain management with the
+              all-in-one platform for streamlining SEO tasks and enhancing
+              backlink strategy.
             </p>
           </div>
 
